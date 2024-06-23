@@ -16,8 +16,8 @@ RUN virtualenv venv && . venv/bin/activate && pip install -r requirements.txt
 # 暴露 Flask 应用运行的端口
 EXPOSE 5000
 
-# 设置环境变量，告诉 Flask 在生产环境中运行
-ENV FLASK_ENV=production
+# 安装 Gunicorn
+RUN . venv/bin/activate && pip install gunicorn
 
 # 启动 Flask 应用
-CMD ["bash", "-c", ". venv/bin/activate && python main.py"]
+CMD ["bash", "-c", ". venv/bin/activate && gunicorn -w 4 -b 0.0.0.0:5000 main:app"]
