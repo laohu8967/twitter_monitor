@@ -47,7 +47,11 @@ def fetch_tweets(user_id):
     response = requests.get(url, headers=headers)
     logger.info(f"Fetched tweets for user ID: {user_id} - Status code: {response.status_code}")
     if response.status_code == 200:
-        return response.json()
+        try:
+            return response.json()
+        except json.JSONDecodeError:
+            logger.error(f"Failed to decode JSON response for user ID: {user_id} - Response: {response.text}")
+            return None
     else:
         logger.error(f"Failed to fetch tweets for user ID: {user_id} - Response: {response.text}")
         return None
@@ -72,13 +76,13 @@ def check_tweets():
         user_ids = [line.strip() for line in f.readlines()]
     for user_id in user_ids:
         tweets = fetch_tweets(user_id)
-        if tweets:
+        if tweets and len(tweets) > 0:
             tweet = tweets[0]  # 假设最新的一条推文
             message = f"New Tweet from {user_id}: {tweet['text']}"
             logger.info(f"New tweet found: {message}")
             notify_feishu(message)
         else:
-            logger.info(f"No tweets found for user ID: {user_id}")
+            logger.info(f"No tweets found for user ID: {user_id} or failed to fetch tweets.")
     return "Checked tweets and sent notifications."
 
 if __name__ == '__main__':
