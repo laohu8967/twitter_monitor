@@ -9,14 +9,16 @@
     <h1>Twitter Monitor</h1>
     <form action="{{ url_for('add_user') }}" method="post">
         <label for="user_id">Add User ID:</label>
-        <input type="text" id="user_id" name="user_id" required>
-        <button type="submit">Add User</button>
+        <input type="text" id="user_id" name="user_id">
+        <input type="submit" value="Add">
     </form>
-
     <form action="{{ url_for('remove_user') }}" method="post">
         <label for="user_id">Remove User ID:</label>
-        <input type="text" id="user_id" name="user_id" required>
-        <button type="submit">Remove User</button>
+        <input type="text" id="user_id" name="user_id">
+        <input type="submit" value="Remove">
+    </form>
+    <form action="{{ url_for('check_tweets') }}" method="get">
+        <input type="submit" value="Check Tweets">
     </form>
 </body>
 </html>
