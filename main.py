@@ -45,8 +45,12 @@ def fetch_tweets(user_id):
         'x-rapidapi-host': RAPIDAPI_HOST
     }
     response = requests.get(url, headers=headers)
-    logger.info(f"Fetched tweets for user ID: {user_id}")
-    return response.json()
+    logger.info(f"Fetched tweets for user ID: {user_id} - Status code: {response.status_code}")
+    if response.status_code == 200:
+        return response.json()
+    else:
+        logger.error(f"Failed to fetch tweets for user ID: {user_id} - Response: {response.text}")
+        return None
 
 def notify_feishu(message):
     headers = {
@@ -59,7 +63,7 @@ def notify_feishu(message):
         }
     }
     response = requests.post(FEISHU_WEBHOOK_URL, headers=headers, data=json.dumps(data))
-    logger.info("Sent notification to Feishu")
+    logger.info("Sent notification to Feishu - Status code: {}".format(response.status_code))
     return response.json()
 
 @app.route('/check_tweets', methods=['GET'])
@@ -71,7 +75,10 @@ def check_tweets():
         if tweets:
             tweet = tweets[0]  # 假设最新的一条推文
             message = f"New Tweet from {user_id}: {tweet['text']}"
+            logger.info(f"New tweet found: {message}")
             notify_feishu(message)
+        else:
+            logger.info(f"No tweets found for user ID: {user_id}")
     return "Checked tweets and sent notifications."
 
 if __name__ == '__main__':
