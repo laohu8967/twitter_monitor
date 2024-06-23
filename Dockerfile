@@ -11,7 +11,8 @@ COPY . /app
 RUN pip install virtualenv
 
 # 创建和激活虚拟环境，并安装依赖项
-RUN virtualenv venv && . venv/bin/activate && pip install -r requirements.txt
+RUN virtualenv venv
+RUN . venv/bin/activate && pip install -r requirements.txt
 
 # 暴露 Flask 应用运行的端口
 EXPOSE 5000
