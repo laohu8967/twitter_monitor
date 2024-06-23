@@ -20,4 +20,4 @@ EXPOSE 5000
 ENV FLASK_ENV=production
 
 # 启动 Flask 应用
-CMD ["bash", "-c", ". venv/bin/activate && python main.py"]
+CMD ["bash", "-c", ". venv/bin/activate && gunicorn --bind 0.0.0.0:5000 main:app"]
