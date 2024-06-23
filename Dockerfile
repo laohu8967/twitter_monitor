@@ -21,3 +21,4 @@ RUN . venv/bin/activate && pip install gunicorn
 
 # 启动 Flask 应用
 CMD ["bash", "-c", ". venv/bin/activate && gunicorn -w 4 -b 0.0.0.0:5000 main:app"]
+CMD ["bash", "-c", ". venv/bin/activate && gunicorn -w 4 -b 0.0.0.0:5000 main:app --log-level=debug --access-logfile - --error-logfile -"]
