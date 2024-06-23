@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Twitter Monitor</title>
+</head>
+<body>
+    <h1>Monitor Twitter Users</h1>
+    <form action="/add_user_id" method="post">
+        <label for="user_id">Add User ID:</label>
+        <input type="text" id="user_id" name="user_id">
+        <button type="submit">Add</button>
+    </form>
+    <h2>Monitored User IDs</h2>
+    <ul>
+        {% for user_id in user_ids %}
+            <li>
+                {{ user_id }}
+                <form action="/delete_user_id" method="post" style="display:inline;">
+                    <input type="hidden" name="user_id" value="{{ user_id }}">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
