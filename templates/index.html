@@ -1,23 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Twitter Monitor</title>
 </head>
 <body>
     <h1>Twitter Monitor</h1>
-    <form action="{{ url_for('add_user_id') }}" method="post">
-        <input type="text" name="user_id" placeholder="Enter Twitter User ID" required>
-        <button type="submit">Add User ID</button>
+    <form action="{{ url_for('add_user') }}" method="post">
+        <label for="user_id">Add User ID:</label>
+        <input type="text" id="user_id" name="user_id" required>
+        <button type="submit">Add User</button>
     </form>
-    <form action="{{ url_for('delete_user_id') }}" method="post">
-        <input type="text" name="user_id" placeholder="Enter Twitter User ID" required>
-        <button type="submit">Delete User ID</button>
+
+    <form action="{{ url_for('remove_user') }}" method="post">
+        <label for="user_id">Remove User ID:</label>
+        <input type="text" id="user_id" name="user_id" required>
+        <button type="submit">Remove User</button>
     </form>
-    <h2>Monitored User IDs:</h2>
-    <ul>
-        {% for user_id in user_ids %}
-            <li>{{ user_id }}</li>
-        {% endfor %}
-    </ul>
 </body>
 </html>
